@@ -2,7 +2,7 @@ import { getCurrentUser } from "@/lib/appwrite";
 import { isLoaded, isLoading } from "expo-font";
 import { createContext , useContext,useState,useEffect } from "react";
 
-const GlobalContext=createContext()
+const GlobalContext=createContext({})
 
 export const useGlobalContext=()=>useContext(GlobalContext)
 const GlobalProvider=({children})=>{

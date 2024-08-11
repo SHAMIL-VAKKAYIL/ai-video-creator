@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { Account, Avatars, Client, Databases, ID, Query } from 'react-native-appwrite';
 export const Config = {
     endpoint: 'https://cloud.appwrite.io/v1',
@@ -39,7 +40,7 @@ export const createUser = async (email, password, username) => {
 
         const avatarUrl = avatars.getInitials(username)
 
-        await SignIn(email, password)
+        // await SignIn(email, password)
 
         const newUser = await database.createDocument(
             Config.databaseId,
@@ -69,6 +70,15 @@ export const SignIn = async (email, password) => {
         console.log(error);
         throw new Error(error)
 
+    }
+}
+export const SignOut = async () => {
+    try{
+        await account.deleteSession('current')
+
+        router.replace('/sign-in')
+    }catch(error){
+        throw new Error(error)
     }
 }
 
