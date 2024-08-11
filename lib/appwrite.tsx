@@ -72,15 +72,6 @@ export const SignIn = async (email, password) => {
 
     }
 }
-export const SignOut = async () => {
-    try{
-        await account.deleteSession('current')
-
-        router.replace('/sign-in')
-    }catch(error){
-        throw new Error(error)
-    }
-}
 
 export const getCurrentUser = async () => {
     try {
@@ -98,6 +89,19 @@ export const getCurrentUser = async () => {
         return currentUser.documents[0]
 
     } catch (error) {
+        throw new Error(error)
+    }
+}
+export const getAllposts = async () => {
+    try {
+         const posts=await database.listDocuments(
+            Config.databaseId,
+            Config.videoCollectionId,
+           
+         )
+         return posts.documents
+    } catch (error) {
+        
         throw new Error(error)
     }
 }
