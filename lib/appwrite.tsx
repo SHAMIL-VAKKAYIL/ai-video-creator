@@ -61,6 +61,7 @@ export const createUser = async (email, password, username) => {
     }
 
 }
+
 export const SignIn = async (email, password) => {
     try {
         const session = await account.createEmailPasswordSession(email, password)
@@ -92,6 +93,7 @@ export const getCurrentUser = async () => {
         throw new Error(error)
     }
 }
+
 export const getAllposts = async () => {
     try {
          const posts=await database.listDocuments(
@@ -102,6 +104,60 @@ export const getAllposts = async () => {
          return posts.documents
     } catch (error) {
         
+        throw new Error(error)
+    }
+}
+
+export const getLatestPost = async () => {
+    try {
+         const posts=await database.listDocuments(
+            Config.databaseId,
+            Config.videoCollectionId,
+            [Query.orderDesc('$createdAt',Query.limit(7))]
+           
+         )
+         return posts.documents
+    } catch (error) {
+        
+        throw new Error(error)
+    }
+}
+
+export const searchPosts = async (query) => {
+    try {
+         const posts=await database.listDocuments(
+            Config.databaseId,
+            Config.videoCollectionId,
+           [ Query.search('title',query)]
+           
+         )
+         return posts.documents
+    } catch (error) {
+        
+        throw new Error(error)
+    }
+}
+
+export const getUserPost = async (accountId) => {
+    try {
+         const posts=await database.listDocuments(
+            Config.databaseId,
+            Config.videoCollectionId,
+           [ Query.equal('user',accountId)]
+           
+         )
+         return posts.documents
+    } catch (error) {
+        
+        throw new Error(error)
+    }
+}
+
+export const SignOut = async () => {
+    try {
+        const sessions =await account.deleteSession('current')
+        return sessions
+    } catch (error) {
         throw new Error(error)
     }
 }

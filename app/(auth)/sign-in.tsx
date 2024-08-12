@@ -6,7 +6,8 @@ import FormField from '@/components/FormField'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import CustomButton from '@/components/CustomButton'
 import { Link, router } from 'expo-router'
-import { SignIn, SignOut } from '@/lib/appwrite'
+import { SignIn, SignOut, getCurrentUser } from '@/lib/appwrite'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 
 const Signin = () => {
@@ -15,6 +16,8 @@ const Signin = () => {
     email: '',
     password: ''
   })
+  const { setUser, setLoggedin } = useGlobalContext()
+
   const [isSubmitting, setisSubmitting] = useState(false)
 
   const submit = async () => {
@@ -22,18 +25,21 @@ const Signin = () => {
       Alert.alert('Error', 'All fields are required')
     }
     setisSubmitting(true)
-      try {
-       await SignIn(form.email,form.password)
-        // Set it to global state....
+    try {
+      await SignIn(form.email, form.password)
+      // Set it to global state....
+      const result = await getCurrentUser()
+      setUser(result)
+      setLoggedin(true)
 
-        router.replace('/home') 
+      router.replace('/home')
 
-      } catch (error) {
-        Alert.alert('Error',error.message)
+    } catch (error) {
+      Alert.alert('Error', error.message)
 
-      } finally{
-        setisSubmitting(false)
-      }
+    } finally {
+      setisSubmitting(false)
+    }
   }
 
 
@@ -70,7 +76,7 @@ const Signin = () => {
               isLoading={isSubmitting}
 
             />
-             
+
             <View className="mt-3 flex-row justify-center">
               <Text className="text-white font-pregular">Don't have any account?</Text>
               <Link href='/sign-up' className='text-secondary-200 font-psemibold'>  Sign Up</Link>
