@@ -17,7 +17,7 @@ const FormField: React.FC<IFormField> = ({ title, value, handleChangeText, place
 
     return (
         <View className={`space-y-2  ${otherStyles} `}>
-            <Text className="text-base text-green-100 font-pmedium ">{title}</Text>
+            <Text className="text-base text-gray-100 font-pmedium ">{title}</Text>
             <View className="border-black-200 border-2 w-full h-16 px-4 rounded-2xl flex flex-row items-center justify-between focus:border-secondary-200">
                 <TextInput
                     className="flex-1 text-white font-psemibold text-base w-full "

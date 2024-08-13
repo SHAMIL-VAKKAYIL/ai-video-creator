@@ -34,7 +34,7 @@ const VideoCard = ({ video: { title, thumbnail, video, user: { username, avatar 
       </View>
       {play ? (
      <Video 
-     source={{uri:"https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"}}
+     source={{uri:video}}
      className="w-full h-44 mt-3 rounded-xl bg-white/10"
      resizeMode={ResizeMode.CONTAIN}
      useNativeControls
